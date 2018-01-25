@@ -21,47 +21,20 @@
         height: 100%;
         width: 100%;
       }
-      
-      .down-enter-active {
-        transition: all 1s ease;
-        transform: translateY(0);
-      }
-      
-      .down-leave-active {
-        transition: all 1s ease;
-        transform: translateY(-100%);
-      }
-      
-      .down-enter {
-        transform: translateY(100%);
-      }
-      
-      .down-leave {
-        transform: translateY(0);
-      }
-      
-      .up-enter-active {
-        transition: all 1s ease;
-        transform: translateY(0);
-      }
-      
-      .up-leave-active {
-        transition: all 1s ease;
-        transform: translateY(100%);
-      }
     </style>
   </head>
   <body>
-    <div id="app" @wheel = "wheelMouse($event)">
-      <transition-group tag="div" :name="name">
-        <div class="block" 
-        v-for="(item, index) in 4" 
-        :key="item"
-        :style="{'background-color':bkColor[index]}"
-        v-show="index === curIndex"
-        @transitionend="end"        >{{item}}</div>
-      </transition-group>
+    <div id="app">
+        <fullpage 
+        :pages = "pages"  
+        :bg-color = "bgColor"
+        >
+          <div slot="">
+            <page1></page1> 
+          </div>
+        </fullpage>     
 
     </div>
+
   </body>
 </html>
