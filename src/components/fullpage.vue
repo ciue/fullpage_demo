@@ -1,6 +1,9 @@
 <template>
       <section @wheel = "wheelMouse($event)"  >
-      <transition-group tag="div" :name="name">
+      <transition-group tag="div" :name="name" 
+        @enter = "enter"
+        @leave = "leave"
+      >
         <div class="block" 
         v-for="(item, index) in pages" 
         :key="item"
@@ -8,7 +11,7 @@
         v-show="index+1 === curIndex"
          @transitionend="end"
         >{{item}}
-        <slot></slot>
+        <slot v-if="index === 2" :state="state"></slot>
         </div>
       </transition-group>
     </section>
@@ -33,7 +36,8 @@ export default {
       curIndex: 1,
       name: null,
       canWheel: true,
-      endCount: 0
+      endCount: 0,
+      state: null,
     };
   },
   methods: {
@@ -62,8 +66,18 @@ export default {
 
     end() {
       console.log("end");
-      this.endCount++;
       this.canWheel = true;
+      this.state = 'transitionend'
+    },
+
+    enter(el,done) {
+      this.state = 'enter'
+      // done()
+    },
+
+    leave(el, done) {
+      this.state = 'leave'
+      // done()
     }
   }
 };
@@ -80,7 +94,6 @@ export default {
 .down-enter-active {
   transition: all 1.5s ease;
 }
-
 
 .up-leave-active {
   transform: translateY(100%);
